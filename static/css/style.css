@@ -1,0 +1,53 @@
+body {
+  background: url('/static/images/back.gif');
+  color: #333;
+  padding: 50px 50px 50px 50px;
+}
+
+h1 {
+  font-size: 72px;
+  font-family: georgia;
+  font-weight: normal;
+  line-height: 50px;
+  display: inline;
+}
+h2 {
+  font-size: 18px;
+  font-family: arial;
+  font-weight: normal;
+  display: inline;
+}
+
+#header {
+  height: 70px;
+  padding-bottom: 20px;
+}
+#header a {
+  text-decoration: none;
+  color: inherit;
+}
+
+#content {
+  font-family: monospace;
+  font-size: 18px;
+}
+
+.quote {
+  border-image: url('/static/images/border.png') 24 3 fill / 24px 3px repeat;
+  padding: 30px 20px 30px 2px;
+  margin: 30px 0 40px 0;
+  overflow: hidden;
+}
+.quote-id {
+  background: url('/static/images/blue.gif');
+  padding: 5px 10px;
+  color: white;
+  font-size: 22px;
+  text-decoration: none;
+  float: left;
+}
+.quote-text {
+  margin: 10px 0 0 30px;
+  float:left;
+  white-space: pre-wrap;
+}

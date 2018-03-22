@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <title>Quartz: #CC.RU quotes</title>
+    <link rel="stylesheet" href="/static/css/style.css"/>
+    <link rel="icon" type="image/x-icon" href="/static/favicon.png" />
+  </head>
+  <body>
+    <div id="header">
+      <h1><a href="/">Quartz /</a></h1>
+      <h2>#CC.RU QUOTES</h2>
+    </div>
+    <div id="content">
+      {{#each items}}
+      <div class="quote">
+        <a class="quote-id" href="/quote/{{this.id}}">#{{this.id}}</a>
+        <div class="quote-text">{{this.text}}</div>
+      </div>
+      {{/each}}
+    </div>
+  </body>
+</html>
