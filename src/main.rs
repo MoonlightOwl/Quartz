@@ -11,6 +11,7 @@ mod quote;
 
 use quote::Quote;
 
+use std::env;
 use std::path::{Path, PathBuf};
 
 use rocket::response::NamedFile;
@@ -64,14 +65,19 @@ fn not_found(req: &Request) -> Template {
 }
 
 
-fn rocket() -> rocket::Rocket {
+fn rocket(database_url: String) -> rocket::Rocket {
     rocket::ignite()
-        .manage(db::init_pool())
+        .manage(db::init_pool(database_url))
         .mount("/", routes![index, quote, files])
         .attach(Template::fairing())
         .catch(errors![not_found])
 }
 
 fn main() {
-    rocket().launch();
+    let args: Vec<String> = env::args().collect();
+    if args.len() < 2 {
+        println!("Syntax: quartz <path to the database file>");
+    } else {
+        rocket(args[1].clone()).launch();
+    }
 }

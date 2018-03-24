@@ -10,11 +10,8 @@ use rocket::{Request, State, Outcome};
 
 pub type SqlitePool = Pool<ConnectionManager<SqliteConnection>>;
 
-pub const DATABASE_URL: &'static str = "./yui.db";
-
-
-pub fn init_pool() -> SqlitePool {
-    let manager = ConnectionManager::<SqliteConnection>::new(DATABASE_URL);
+pub fn init_pool(database_url: String) -> SqlitePool {
+    let manager = ConnectionManager::<SqliteConnection>::new(database_url);
     Pool::new(manager).expect("db pool")
 }
 
