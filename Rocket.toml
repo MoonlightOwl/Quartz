@@ -1,3 +1,6 @@
 
 [global]
 address = "0.0.0.0"
+
+[production]
+port = 1096
