@@ -4,29 +4,6 @@ body {
   padding: 50px 50px 50px 50px;
 }
 
-h1 {
-  font-size: 72px;
-  font-family: georgia;
-  font-weight: normal;
-  line-height: 50px;
-  display: inline;
-}
-h2 {
-  font-size: 18px;
-  font-family: arial;
-  font-weight: normal;
-  display: inline;
-}
-
-#header {
-  height: 70px;
-  padding-bottom: 20px;
-}
-#header a {
-  text-decoration: none;
-  color: inherit;
-}
-
 #content {
   font-family: monospace;
   font-size: 18px;
