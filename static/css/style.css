@@ -2,6 +2,9 @@ body {
   background: url('/static/images/back.gif');
   color: #333;
   padding: 50px 50px 50px 50px;
+  max-width: 1080px;
+  margin: 0 auto !important;
+  float: none !important;
 }
 
 #content {
@@ -9,14 +12,19 @@ body {
   font-size: 18px;
 }
 
+.logo {
+  display: table;
+  margin: 0 auto;
+}
+
 .quote {
-  border-image: url('/static/images/border.png') 24 3 fill / 24px 3px repeat;
+  border-image: url('/static/images/border.png') 17 3 fill / 17px 3px repeat;
   padding: 30px 20px 30px 2px;
   margin: 30px 0 40px 0;
   overflow: hidden;
 }
 .quote-id {
-  background: url('/static/images/blue.gif');
+  background: url('/static/images/red.gif');
   padding: 5px 10px;
   color: white;
   font-size: 22px;
