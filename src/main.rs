@@ -3,7 +3,13 @@
 
 extern crate rocket_contrib;
 extern crate rocket;
+#[macro_use] extern crate diesel;
 #[macro_use] extern crate serde_derive;
+
+mod db;
+mod quote;
+
+use quote::Quote;
 
 use std::path::{Path, PathBuf};
 
@@ -11,45 +17,38 @@ use rocket::response::NamedFile;
 use rocket::Request;
 use rocket_contrib::Template;
 
-
 #[derive(Serialize)]
-struct Quote {
-    id: String,
-    text: String
+struct SingleQuoteContext { quote: Quote }
+
+impl SingleQuoteContext {
+    pub fn raw(id: i32, conn: &db::Conn) -> Option<SingleQuoteContext> {
+        let quote = Quote::get_with_id(id, conn);
+        if quote.is_err() { None }
+        else { Some(SingleQuoteContext { quote: quote.unwrap() }) }
+    }
 }
 
-#[derive(Serialize)]
-struct QuoteListContext {
-    items: Vec<Quote>
-}
+#[derive(Debug, Serialize)]
+struct QuoteListContext { quotes: Vec<Quote> }
 
-#[derive(Serialize)]
-struct SingleQuoteContext {
-    item: Quote
+impl QuoteListContext {
+    pub fn raw(conn: &db::Conn) -> QuoteListContext {
+        QuoteListContext { quotes: Quote::all(conn) }
+    }
 }
 
 
 #[get("/")]
-fn index() -> Template {
-    let context = QuoteListContext {
-        items: vec![
-            Quote { id: String::from("0"), text: String::from("rip irc") },
-            Quote { id: String::from("1"), text: String::from("take it") },
-            Quote { id: String::from("2"), text: String::from("...") },
-        ]
-    };
-    Template::render("index", &context)
+fn index(conn: db::Conn) -> Template {
+    Template::render("index", &QuoteListContext::raw(&conn))
 }
 
 #[get("/quote/<id>")]
-fn quote(id: String) -> Template {
-    let context = SingleQuoteContext {
-        item: Quote {
-            id,
-            text: String::from("rip irc\nrip irc\nrip irc")
-        }
-    };
-    Template::render("quote", &context)
+fn quote(id: i32, conn: db::Conn) -> Option<Template> {
+    match SingleQuoteContext::raw(id, &conn) {
+        Some(context) => Some(Template::render("quote", &context)),
+        None => None
+    }
 }
 
 #[get("/static/<file..>")]
@@ -67,6 +66,7 @@ fn not_found(req: &Request) -> Template {
 
 fn rocket() -> rocket::Rocket {
     rocket::ignite()
+        .manage(db::init_pool())
         .mount("/", routes![index, quote, files])
         .attach(Template::fairing())
         .catch(errors![not_found])

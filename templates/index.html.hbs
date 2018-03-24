@@ -5,15 +5,16 @@
     <title>Quartz: #CC.RU quotes</title>
     <link rel="stylesheet" href="/static/css/style.css"/>
     <link rel="icon" type="image/x-icon" href="/static/favicon.png" />
+    <link href="https://fonts.googleapis.com/css?family=Fira+Mono" rel="stylesheet">
   </head>
   <body>
     <div class="logo">
       <a href="/"><img src="/static/favicon.png" alt="quartz"></a>
     </div>
     <div id="content">
-      {{#each items}}
+      {{#each quotes}}
       <div class="quote">
-        <a class="quote-id" href="/quote/{{this.id}}">#{{this.id}}</a>
+        <a class="quote-id" href="/quote/{{this.rowid}}">#{{this.rowid}}</a>
         <div class="quote-text">{{this.text}}</div>
       </div>
       {{/each}}

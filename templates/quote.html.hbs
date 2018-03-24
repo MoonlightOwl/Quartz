@@ -2,15 +2,19 @@
 <html>
   <head>
     <meta charset="utf-8" />
-    <title>Quartz: #{{item.id}}</title>
+    <title>Quartz: #{{quote.rowid}}</title>
     <link rel="stylesheet" href="/static/css/style.css"/>
     <link rel="icon" type="image/x-icon" href="/static/favicon.png" />
+    <link href="https://fonts.googleapis.com/css?family=Fira+Mono" rel="stylesheet">
   </head>
   <body>
+    <div class="logo">
+      <a href="/"><img src="/static/favicon.png" alt="quartz"></a>
+    </div>
     <div id="content">
       <div class="quote">
-        <a class="quote-id" href="">#{{item.id}}</a>
-        <div class="quote-text">{{item.text}}</div>
+        <a class="quote-id" href="">#{{quote.rowid}}</a>
+        <div class="quote-text">{{quote.text}}</div>
       </div>
     </div>
   </body>
