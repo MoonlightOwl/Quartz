@@ -27,6 +27,11 @@ impl SingleQuoteContext {
         if quote.is_err() { None }
         else { Some(SingleQuoteContext { quote: quote.unwrap() }) }
     }
+    pub fn random(conn: &db::Conn) -> Option<SingleQuoteContext> {
+        let quote = Quote::get_random(conn);
+        if quote.is_err() { None }
+        else { Some(SingleQuoteContext { quote: quote.unwrap() }) }
+    }
 }
 
 #[derive(Debug, Serialize)]
@@ -42,6 +47,14 @@ impl QuoteListContext {
 #[get("/")]
 fn index(conn: db::Conn) -> Template {
     Template::render("index", &QuoteListContext::raw(&conn))
+}
+
+#[get("/quote/random")]
+fn random(conn: db::Conn) -> Option<Template> {
+    match SingleQuoteContext::random(&conn) {
+        Some(context) => Some(Template::render("quote", &context)),
+        None => None
+    }
 }
 
 #[get("/quote/<id>")]
@@ -68,7 +81,7 @@ fn not_found(req: &Request) -> Template {
 fn rocket(database_url: String) -> rocket::Rocket {
     rocket::ignite()
         .manage(db::init_pool(database_url))
-        .mount("/", routes![index, quote, files])
+        .mount("/", routes![index, random, quote, files])
         .attach(Template::fairing())
         .catch(errors![not_found])
 }
